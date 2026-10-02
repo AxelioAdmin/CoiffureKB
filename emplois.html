@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="fr-CA" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offres d'emploi — Coiffure KB Unisexe</title>
+  <meta name="description" content="Coiffure KB Unisexe embauche : coiffeur(euse), barbier(ère), coloriste et apprenti(e). Consultez nos offres d'emploi et postulez en ligne.">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta property="og:title" content="On embauche — Coiffure KB Unisexe">
+  <meta property="og:image" content="img/equipe.jpg">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300..600&family=Michroma&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Tailwind CSS v4 (aucune compilation nécessaire) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Michroma", "Jost", sans-serif;
+      --color-ink: #0b0b0b;
+      --color-paper: #f2f0eb;
+    }
+  </style>
+</head>
+
+<body class="bg-ink text-white antialiased" data-page="emplois">
+  <a href="#contenu" class="skip-link">Aller au contenu</a>
+
+  <!-- ===================================================================
+       EN-TÊTE
+       =================================================================== -->
+  <header id="header" class="site-header fixed inset-x-0 top-0 z-50">
+    <div class="container-kb flex items-center justify-between gap-8 py-5">
+      <a href="index.html" class="shrink-0" aria-label="Coiffure KB Unisexe — accueil">
+        <img src="img/logo.svg" alt="Coiffure KB Unisexe" class="h-9 w-auto md:h-11" width="146" height="44">
+      </a>
+
+      <nav class="hidden lg:block" aria-label="Navigation principale">
+        <ul class="flex items-center gap-9">
+          <li><a class="nav-link" href="index.html#salon">Le salon</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="index.html#galerie">Galerie</a></li>
+          <li><a class="nav-link" href="emplois.html" aria-current="page">Emplois</a></li>
+          <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="#postuler" class="btn btn--ghost hidden sm:inline-flex">Postuler</a>
+        <button type="button" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu mobile -->
+  <div id="menu-mobile" class="mobile-menu lg:hidden" inert>
+    <nav aria-label="Navigation mobile">
+      <ul class="border-t border-white/10">
+        <li><a href="index.html#salon" class="mobile-menu__link">Le salon</a></li>
+        <li><a href="services.html" class="mobile-menu__link">Services</a></li>
+        <li><a href="index.html#galerie" class="mobile-menu__link">Galerie</a></li>
+        <li><a href="emplois.html" class="mobile-menu__link" aria-current="page">Emplois</a></li>
+        <li><a href="index.html#contact" class="mobile-menu__link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="space-y-2 text-sm text-white/55">
+      <a href="#" class="block text-base text-white" data-kb-tel data-kb="telephone">(514) 555-0123</a>
+      <p data-kb="adresse">123, rue Principale, Ville (QC) A1A 1A1</p>
+    </div>
+  </div>
+
+  <main id="contenu">
+
+    <!-- =================================================================
+         EN-TÊTE DE PAGE
+         ================================================================= -->
+    <section class="pb-24 pt-40 md:pb-32 md:pt-48">
+      <div class="container-kb">
+        <nav aria-label="Fil d'Ariane" class="text-[11px] uppercase tracking-[0.25em] text-white/40" data-reveal>
+          <a href="index.html" class="link-line hover:text-white">Accueil</a><span class="mx-3" aria-hidden="true">/</span><span class="text-white/70">Emplois</span>
+        </nav>
+
+        <div class="mt-10 grid items-center gap-14 lg:grid-cols-12">
+          <div class="lg:col-span-6" data-reveal>
+            <p class="eyebrow">Carrières</p>
+            <h1 class="mt-8 font-display text-[clamp(1.7rem,3vw,2.6rem)] leading-[1.3] tracking-[0.01em]">Rejoignez <span class="text-white/45">l'équipe Coiffure KB.</span></h1>
+            <p class="mt-8 max-w-lg text-[15px]/7 text-white/60">Coiffeur(euse), barbier(ère), coloriste ou apprenti(e)&nbsp;: si la coiffure vous passionne et que le souci du détail vous ressemble, il y a une place pour vous chez nous.</p>
+            <div class="mt-10 flex flex-wrap gap-3">
+              <a href="#postes" class="btn btn--light">Voir les postes</a>
+              <a href="#postuler" class="btn btn--ghost">Postuler</a>
+            </div>
+            <p class="mt-10 flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-white/50" data-if-jobs>
+              <span class="status-dot is-open text-white"></span>
+              <span><span data-jobs-count>4</span> <span data-plural="postes ouverts" data-singular="poste ouvert">postes ouverts</span></span>
+            </p>
+          </div>
+          <div class="lg:col-span-5 lg:col-start-8" data-reveal>
+            <div class="img-hover">
+              <img src="img/equipe.jpg" alt="Coiffeuses souriantes tenant brosses et ciseaux" class="img-bw aspect-[4/3] w-full object-cover lg:aspect-[4/5]">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         AVANTAGES
+         ================================================================= -->
+    <section class="border-t border-white/10 py-24 md:py-32" aria-labelledby="titre-avantages">
+      <div class="container-kb">
+        <div class="grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
+          <div class="lg:col-span-7">
+            <p class="eyebrow">Pourquoi KB</p>
+            <h2 id="titre-avantages" class="title mt-6">Un salon où il fait <em>bon travailler</em></h2>
+          </div>
+          <p class="text-[15px]/7 text-white/55 lg:col-span-4 lg:col-start-9">Une équipe heureuse fait des clients heureux. Voici ce qui vous attend chez nous.</p>
+        </div>
+
+        <ul class="mt-16 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+          <li class="bg-ink p-8 md:p-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-7 text-white/70"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h3 class="mt-8 font-display text-xs uppercase tracking-[0.14em]">Clientèle établie</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Un salon achalandé et une clientèle fidèle&nbsp;: votre horaire se remplit rapidement.</p>
+          </li>
+          <li class="bg-ink p-8 md:p-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-7 text-white/70"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <h3 class="mt-8 font-display text-xs uppercase tracking-[0.14em]">Horaire flexible</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Temps plein ou partiel, jour ou soir&nbsp;: on bâtit l'horaire avec vous.</p>
+          </li>
+          <li class="bg-ink p-8 md:p-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-7 text-white/70"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <h3 class="mt-8 font-display text-xs uppercase tracking-[0.14em]">Formation continue</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Nouvelles techniques de coupe et de couleur pour rester à l'affût des tendances.</p>
+          </li>
+          <li class="bg-ink p-8 md:p-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-7 text-white/70"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88"/><path d="M14.47 14.48 20 20"/><path d="M8.12 8.12 12 12"/></svg>
+            <h3 class="mt-8 font-display text-xs uppercase tracking-[0.14em]">Produits professionnels</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Des produits et des outils de qualité professionnelle mis à votre disposition.</p>
+          </li>
+          <li class="bg-ink p-8 md:p-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-7 text-white/70"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            <h3 class="mt-8 font-display text-xs uppercase tracking-[0.14em]">Ambiance d'équipe</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Une équipe soudée, de l'entraide au quotidien et un salon où l'on aime se retrouver.</p>
+          </li>
+          <li class="bg-ink p-8 md:p-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-7 text-white/70"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <h3 class="mt-8 font-display text-xs uppercase tracking-[0.14em]">Rémunération concurrentielle</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Salaire selon l'expérience, pourboires et rabais sur les produits.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         POSTES OUVERTS
+         ================================================================= -->
+    <section id="postes" class="border-t border-white/10 py-24 md:py-32">
+      <div class="container-kb">
+        <div class="grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
+          <div class="lg:col-span-7">
+            <p class="eyebrow">Postes ouverts</p>
+            <h2 class="title mt-6">Trouvez <em>votre place</em></h2>
+          </div>
+          <p class="text-[15px]/7 text-white/55 lg:col-span-4 lg:col-start-9">Cliquez sur un poste pour voir le détail, puis postulez en quelques instants.</p>
+        </div>
+
+        <!-- Rempli automatiquement depuis js/data.js -->
+        <div class="mt-16" data-jobs-list></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PROCESSUS
+         ================================================================= -->
+    <section class="border-t border-white/10 py-24 md:py-32" aria-labelledby="titre-processus">
+      <div class="container-kb">
+        <div class="mx-auto max-w-2xl text-center" data-reveal>
+          <p class="eyebrow eyebrow--center">Le processus</p>
+          <h2 id="titre-processus" class="title mt-6">Simple, rapide, <em>humain</em></h2>
+        </div>
+        <ol class="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
+          <li class="border-t border-white/15 pt-8" data-reveal>
+            <span class="font-display text-xs tracking-[0.2em] text-white/35">01</span>
+            <h3 class="mt-5 font-display text-sm uppercase tracking-[0.12em]">Candidature</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Remplissez le formulaire ci-dessous et joignez votre CV au courriel qui s'ouvre.</p>
+          </li>
+          <li class="border-t border-white/15 pt-8" data-reveal>
+            <span class="font-display text-xs tracking-[0.2em] text-white/35">02</span>
+            <h3 class="mt-5 font-display text-sm uppercase tracking-[0.12em]">Rencontre</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Nous communiquons avec vous pour planifier une rencontre au salon.</p>
+          </li>
+          <li class="border-t border-white/15 pt-8" data-reveal>
+            <span class="font-display text-xs tracking-[0.2em] text-white/35">03</span>
+            <h3 class="mt-5 font-display text-sm uppercase tracking-[0.12em]">Essai en salon</h3>
+            <p class="mt-4 text-sm/6 text-white/55">Une courte démonstration de votre savoir-faire, puis bienvenue dans l'équipe.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         FORMULAIRE DE CANDIDATURE
+         ================================================================= -->
+    <section id="postuler" class="border-y border-white/10 bg-[#111] py-24 md:py-32">
+      <div class="container-kb grid gap-16 lg:grid-cols-12">
+        <div class="lg:col-span-4" data-reveal>
+          <p class="eyebrow">Postuler</p>
+          <h2 class="title mt-6">Envoyez votre <em>candidature</em></h2>
+          <p class="mt-8 text-[15px]/7 text-white/60">Remplissez le formulaire&nbsp;: votre application de courriel s'ouvrira avec un message prérempli. Il ne vous restera qu'à joindre votre CV et à l'envoyer.</p>
+          <div class="mt-10 border-t border-white/10 pt-8 text-sm/6 text-white/55">
+            <p>Vous préférez écrire directement&nbsp;?</p>
+            <a href="#" class="link-line mt-1 inline-block text-white" data-kb-mail-jobs data-kb="courrielEmplois">emplois@example.com</a>
+            <p class="mt-1">ou passer au salon avec votre CV.</p>
+          </div>
+        </div>
+
+        <form class="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:col-span-7 lg:col-start-6" data-apply-form data-reveal>
+          <label class="block">
+            <span class="field__label">Nom complet *</span>
+            <input class="field__input" type="text" name="nom" autocomplete="name" required placeholder="Prénom Nom">
+          </label>
+          <label class="block">
+            <span class="field__label">Courriel *</span>
+            <input class="field__input" type="email" name="courriel" autocomplete="email" required placeholder="vous@exemple.com">
+          </label>
+          <label class="block">
+            <span class="field__label">Téléphone</span>
+            <input class="field__input" type="tel" name="telephone" autocomplete="tel" placeholder="(514) 000-0000">
+          </label>
+          <label class="block">
+            <span class="field__label">Poste souhaité *</span>
+            <select class="field__input" name="poste" required data-job-select>
+              <option value="" disabled selected>Choisir un poste…</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="field__label">Expérience *</span>
+            <select class="field__input" name="experience" required>
+              <option value="" disabled selected>Votre expérience…</option>
+              <option>Étudiant(e) en coiffure</option>
+              <option>Moins de 2 ans</option>
+              <option>2 à 5 ans</option>
+              <option>Plus de 5 ans</option>
+            </select>
+          </label>
+          <div class="hidden sm:block" aria-hidden="true"></div>
+
+          <fieldset class="sm:col-span-2">
+            <legend class="field__label">Disponibilités</legend>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <label class="check-pill"><input type="checkbox" name="disponibilites" value="Jour"><span>Jour</span></label>
+              <label class="check-pill"><input type="checkbox" name="disponibilites" value="Soir"><span>Soir</span></label>
+              <label class="check-pill"><input type="checkbox" name="disponibilites" value="Fin de semaine"><span>Fin de semaine</span></label>
+              <label class="check-pill"><input type="checkbox" name="disponibilites" value="Temps plein"><span>Temps plein</span></label>
+              <label class="check-pill"><input type="checkbox" name="disponibilites" value="Temps partiel"><span>Temps partiel</span></label>
+            </div>
+          </fieldset>
+
+          <label class="block sm:col-span-2">
+            <span class="field__label">Parlez-nous de vous</span>
+            <textarea class="field__input" name="message" rows="4" placeholder="Votre parcours, vos spécialités, ce qui vous motive…"></textarea>
+          </label>
+
+          <div class="flex flex-col gap-6 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+            <p class="flex items-center gap-3 text-xs text-white/45">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-4 shrink-0"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              N'oubliez pas de joindre votre CV au courriel.
+            </p>
+            <button type="submit" class="btn btn--light">Préparer ma candidature</button>
+          </div>
+
+          <div class="border border-white/15 p-6 text-sm/6 text-white/70 sm:col-span-2" role="status" tabindex="-1" hidden data-apply-success>
+            Votre application de courriel devrait s'ouvrir avec votre candidature. Joignez votre CV, puis envoyez. Si rien ne s'ouvre, écrivez-nous directement à
+            <a href="#" class="text-white underline underline-offset-4" data-kb-mail-jobs data-kb="courrielEmplois">emplois@example.com</a>.
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================
+       PIED DE PAGE
+       =================================================================== -->
+  <footer class="border-t border-white/10">
+    <div class="container-kb py-20 md:py-24">
+      <div class="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
+        <p class="font-display text-[clamp(1.2rem,2vw,1.6rem)] leading-snug">Une question sur un poste&nbsp;? <span class="text-white/45">Appelez-nous.</span></p>
+        <a href="#" class="btn btn--light" data-kb-tel data-kb="telephone">(514) 555-0123</a>
+      </div>
+
+      <div class="mt-16 grid gap-12 border-t border-white/10 pt-16 sm:grid-cols-2 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <a href="index.html" class="inline-block" aria-label="Coiffure KB Unisexe — accueil">
+            <img src="img/logo.svg" alt="Coiffure KB Unisexe" class="h-12 w-auto" width="160" height="48" loading="lazy">
+          </a>
+          <p class="mt-6 max-w-xs text-sm/6 text-white/50">Salon de coiffure unisexe&nbsp;: coupes, couleurs, barbe et soins pour toute la famille.</p>
+          <div class="mt-6 flex gap-2">
+            <a href="#" target="_blank" rel="noopener" aria-label="Facebook" class="grid size-10 place-items-center border border-white/15 transition-colors duration-300 hover:bg-white hover:text-ink" data-kb-social="facebook">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-4"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Instagram" class="grid size-10 place-items-center border border-white/15 transition-colors duration-300 hover:bg-white hover:text-ink" data-kb-social="instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-4"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav class="lg:col-span-2" aria-label="Pied de page">
+          <h3 class="eyebrow">Menu</h3>
+          <ul class="mt-5 space-y-2.5 text-sm text-white/60">
+            <li><a class="link-line hover:text-white" href="index.html#salon">Le salon</a></li>
+            <li><a class="link-line hover:text-white" href="services.html">Services &amp; tarifs</a></li>
+            <li><a class="link-line hover:text-white" href="index.html#galerie">Galerie</a></li>
+            <li><a class="link-line hover:text-white" href="emplois.html">Emplois</a></li>
+            <li><a class="link-line hover:text-white" href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="lg:col-span-3">
+          <h3 class="eyebrow">Heures</h3>
+          <ul class="mt-5 text-[13px]" data-kb-hours="compact"></ul>
+        </div>
+
+        <div class="lg:col-span-3">
+          <h3 class="eyebrow">Coordonnées</h3>
+          <address class="mt-5 space-y-2.5 text-sm not-italic text-white/60">
+            <p data-kb="rue">123, rue Principale</p>
+            <p data-kb="ville">Ville (QC) A1A 1A1</p>
+            <p><a href="#" class="link-line hover:text-white" data-kb-tel data-kb="telephone">(514) 555-0123</a></p>
+            <p><a href="#" class="link-line hover:text-white" data-kb-mail data-kb="courriel">salon@example.com</a></p>
+          </address>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10">
+      <div class="container-kb flex flex-col gap-2 py-6 text-[11px] uppercase tracking-[0.2em] text-white/35 sm:flex-row sm:justify-between">
+        <p>© <span data-kb-year>2026</span> Coiffure KB Unisexe</p>
+        <p>Photos d'inspiration&nbsp;: Unsplash</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

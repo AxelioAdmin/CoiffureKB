@@ -15,20 +15,17 @@
   const root = document.documentElement;
   const $ = (selector, ctx = document) => ctx.querySelector(selector);
   const $$ = (selector, ctx = document) => Array.from(ctx.querySelectorAll(selector));
-
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   const DAYS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
   const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0]; // affichage du lundi au dimanche
 
   const ICONS = {
-    arrowUpRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>',
-    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>',
-    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-3.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
-    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
-    prev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',
-    next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
+    prev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',
+    next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>',
   };
 
   /* ------------------------------------------------------------------------
@@ -60,7 +57,9 @@
     return escapeHtml(item.prix || "Sur consultation");
   }
 
-  function minPrice(category) {
+  // Prix « à partir de » d'une catégorie : prixDepart s'il est défini, sinon le plus bas
+  function startingPrice(category) {
+    if (typeof category.prixDepart === "number") return category.prixDepart;
     const prices = category.prestations.map((p) => p.prix).filter((p) => typeof p === "number");
     return prices.length ? Math.min(...prices) : null;
   }
@@ -171,12 +170,12 @@
         const time = slot ? `${formatHour(slot[0])} – ${formatHour(slot[1])}` : "Fermé";
         const rowClass = compact
           ? "flex justify-between gap-4 py-1"
-          : "flex items-center justify-between gap-4 border-b border-white/10 py-4";
-        const badge = isToday && !compact
-          ? '<span class="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-ink">Aujourd’hui</span>'
+          : "flex items-center justify-between gap-4 border-b border-white/10 py-3.5";
+        const label = isToday && !compact
+          ? '<span class="text-[10px] uppercase tracking-[0.22em] text-white/45">Aujourd’hui</span>'
           : "";
-        return `<li class="${rowClass} ${isToday ? "text-white" : "text-white/55"}">
-            <span class="flex items-center gap-3">${DAYS[day]}${badge}</span>
+        return `<li class="${rowClass} ${isToday ? "text-white" : "text-white/50"}">
+            <span class="flex items-center gap-3">${DAYS[day]}${label}</span>
             <span class="tabular-nums">${time}</span>
           </li>`;
       }).join("");
@@ -193,20 +192,21 @@
     const list = $("[data-services-list]");
     if (!list) return;
 
-    list.innerHTML = SERVICES.map((cat, i) => {
-      const min = minPrice(cat);
+    list.innerHTML = SERVICES.map((cat) => {
+      const start = startingPrice(cat);
       const preview = cat.prestations.slice(0, 4).map((p) => escapeHtml(p.nom)).join(" · ");
       return `
-        <li class="border-b border-white/10" data-reveal style="--d:${i * 0.05}s">
-          <a href="services.html#${cat.id}" class="service-row group grid grid-cols-[auto_1fr_auto] items-center gap-4 py-6 sm:grid-cols-[auto_1fr_auto_auto] md:gap-8 md:py-8" data-hover-img="${cat.image}">
-            <img src="${cat.image}" alt="" loading="lazy" class="img-bw size-16 rounded-xl object-cover sm:size-20 lg:hidden">
-            <span class="hidden w-12 text-sm tabular-nums text-white/40 lg:block">${pad(i + 1)}</span>
-            <span class="min-w-0">
-              <span class="block font-display text-3xl font-bold tracking-tight transition-transform duration-700 ease-out group-hover:translate-x-3 sm:text-5xl lg:text-7xl">${escapeHtml(cat.titre)}</span>
-              <span class="mt-2 block truncate text-sm text-white/50">${preview}</span>
+        <li class="border-t border-white/10" data-reveal>
+          <a href="services.html#${cat.id}" class="group flex items-center gap-5 py-6">
+            <img src="${cat.image}" alt="" loading="lazy" class="img-bw size-16 shrink-0 object-cover opacity-70 transition-opacity duration-500 group-hover:opacity-100">
+            <span class="min-w-0 flex-1">
+              <span class="flex items-baseline gap-4">
+                <span class="font-display text-[13px] uppercase tracking-[0.12em]">${escapeHtml(cat.titre)}</span>
+                <span class="leader" aria-hidden="true"></span>
+                <span class="whitespace-nowrap text-sm text-white/70">${start !== null ? `dès ${start}&nbsp;$` : ""}</span>
+              </span>
+              <span class="mt-2 block truncate text-[13px] text-white/45 transition-colors duration-500 group-hover:text-white/65">${preview}</span>
             </span>
-            <span class="hidden whitespace-nowrap text-right text-sm text-white/70 sm:block">${min !== null ? `dès ${min}&nbsp;$` : ""}</span>
-            <span class="grid size-11 shrink-0 place-items-center rounded-full border border-white/20 transition-colors duration-500 group-hover:border-white group-hover:bg-white group-hover:text-ink md:size-14 [&>svg]:size-5">${ICONS.arrowUpRight}</span>
           </a>
         </li>`;
     }).join("");
@@ -219,33 +219,33 @@
     const nav = $("[data-cat-nav]");
     if (nav) {
       nav.innerHTML = SERVICES.map(
-        (cat) => `<a href="#${cat.id}" class="chip" data-cat-link="${cat.id}">${escapeHtml(cat.titre)}</a>`
+        (cat) => `<a href="#${cat.id}" class="tab-link" data-cat-link="${cat.id}">${escapeHtml(cat.titre)}</a>`
       ).join("");
     }
 
     wrap.innerHTML = SERVICES.map((cat, i) => `
-      <section id="${cat.id}" class="grid gap-10 border-t border-white/10 py-16 md:py-24 lg:grid-cols-12 lg:gap-16" data-cat-section aria-labelledby="titre-${cat.id}">
-        <div class="lg:col-span-5 xl:col-span-4">
-          <div class="lg:sticky lg:top-44">
-            <p class="eyebrow">${pad(i + 1)} / ${pad(SERVICES.length)}</p>
-            <h2 id="titre-${cat.id}" class="mt-5 font-display text-5xl font-bold tracking-tight md:text-6xl">${escapeHtml(cat.titre)}</h2>
-            <p class="mt-5 max-w-md text-white/60">${escapeHtml(cat.description)}</p>
-            <div class="img-zoom mt-8 overflow-hidden rounded-2xl" data-reveal="clip">
-              <img src="${cat.image}" alt="${escapeHtml(cat.titre)} — Coiffure KB Unisexe" loading="lazy" class="img-bw aspect-[16/9] w-full object-cover lg:aspect-[4/5]">
+      <section id="${cat.id}" class="grid gap-10 border-t border-white/10 py-20 md:py-24 lg:grid-cols-12 lg:gap-16" data-cat-section aria-labelledby="titre-${cat.id}">
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-44" data-reveal>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/40">${pad(i + 1)} / ${pad(SERVICES.length)}</p>
+            <h2 id="titre-${cat.id}" class="title mt-4">${escapeHtml(cat.titre)}</h2>
+            <p class="mt-4 max-w-sm text-[15px]/7 text-white/55">${escapeHtml(cat.description)}</p>
+            <div class="img-hover mt-8">
+              <img src="${cat.image}" alt="${escapeHtml(cat.titre)} — Coiffure KB Unisexe" loading="lazy" class="img-bw aspect-[16/10] w-full object-cover lg:aspect-[4/5]">
             </div>
           </div>
         </div>
-        <ul class="lg:col-span-7 xl:col-span-8">
-          ${cat.prestations.map((p, j) => `
-            <li class="border-b border-white/10 py-7 first:pt-0" data-reveal style="--d:${j * 0.04}s">
+        <ul class="lg:col-span-7 lg:col-start-6">
+          ${cat.prestations.map((p) => `
+            <li class="border-b border-white/10 py-6 first:pt-0" data-reveal>
               <div class="flex items-baseline gap-4">
-                <h3 class="font-display text-xl font-semibold tracking-tight md:text-2xl">${escapeHtml(p.nom)}</h3>
+                <h3 class="text-lg md:text-xl">${escapeHtml(p.nom)}</h3>
                 <span class="leader" aria-hidden="true"></span>
-                <span class="whitespace-nowrap font-display text-lg font-semibold md:text-2xl">${formatPrice(p)}</span>
+                <span class="whitespace-nowrap text-base text-white/85 md:text-lg">${formatPrice(p)}</span>
               </div>
-              <p class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-white/50">
+              <p class="mt-1.5 flex flex-wrap gap-x-5 gap-y-1 text-sm text-white/45">
                 ${p.detail ? `<span>${escapeHtml(p.detail)}</span>` : ""}
-                ${p.duree ? `<span class="inline-flex items-center gap-1.5">${ICONS.clock}${escapeHtml(p.duree)}</span>` : ""}
+                ${p.duree ? `<span>${escapeHtml(p.duree)}</span>` : ""}
               </p>
             </li>`).join("")}
         </ul>
@@ -277,29 +277,25 @@
   /* ------------------------------------------------------------------------
      4. Offres d'emploi
      ------------------------------------------------------------------------ */
-  function renderJobCards() {
-    const grid = $("[data-jobs-cards]");
-    if (!grid) return;
+  function renderJobRows() {
+    const list = $("[data-jobs-rows]");
+    if (!list) return;
 
     if (!JOBS.length) {
-      grid.innerHTML = `<p class="rounded-3xl border border-ink/15 p-8 text-ink/70 md:col-span-2">Aucun poste ouvert pour le moment — les candidatures spontanées sont toujours les bienvenues.</p>`;
+      list.innerHTML = `<li class="border-b border-white/10 py-8 text-white/60">Aucun poste ouvert pour le moment — les candidatures spontanées sont toujours les bienvenues.</li>`;
       return;
     }
 
-    grid.innerHTML = JOBS.map((job, i) => `
-      <article class="group relative flex flex-col justify-between gap-10 rounded-3xl border border-ink/15 p-7 transition-colors duration-500 hover:bg-ink hover:text-white md:p-9" data-reveal style="--d:${i * 0.06}s">
-        <div>
-          <div class="flex flex-wrap gap-2">
-            <span class="tag">${escapeHtml(job.type)}</span>
-            <span class="tag">${escapeHtml(job.experience)}</span>
-          </div>
-          <h3 class="mt-7 font-display text-3xl font-bold tracking-tight md:text-4xl">${escapeHtml(job.titre)}</h3>
-          <p class="mt-3 text-ink/60 transition-colors duration-500 group-hover:text-white/60">${escapeHtml(job.resume)}</p>
-        </div>
-        <a href="emplois.html#${job.id}" class="inline-flex items-center gap-2 text-sm font-semibold after:absolute after:inset-0 after:rounded-3xl [&>svg]:size-4" data-cursor="Voir">
-          Voir le poste ${ICONS.arrowUpRight}
+    list.innerHTML = JOBS.map((job) => `
+      <li class="border-b border-white/10" data-reveal>
+        <a href="emplois.html#${job.id}" class="group flex items-center justify-between gap-6 py-7">
+          <span class="min-w-0">
+            <span class="block font-display text-sm uppercase tracking-[0.1em] md:text-base">${escapeHtml(job.titre)}</span>
+            <span class="mt-2.5 block text-[11px] uppercase tracking-[0.2em] text-white/45">${escapeHtml(job.type)} · ${escapeHtml(job.experience)}</span>
+          </span>
+          <span class="grid size-11 shrink-0 place-items-center rounded-full border border-white/20 transition-colors duration-500 group-hover:border-white group-hover:bg-white group-hover:text-ink [&>svg]:size-4">${ICONS.arrow}</span>
         </a>
-      </article>`).join("");
+      </li>`).join("");
   }
 
   function renderJobDetails() {
@@ -307,49 +303,51 @@
     if (!list) return;
 
     if (!JOBS.length) {
-      list.innerHTML = `<p class="border-t border-white/10 py-10 text-lg text-white/60">Aucun poste ouvert pour le moment — envoyez-nous tout de même votre candidature spontanée ci-dessous.</p>`;
+      list.innerHTML = `<p class="border-t border-white/10 py-10 text-white/60">Aucun poste ouvert pour le moment — envoyez-nous tout de même votre candidature spontanée ci-dessous.</p>`;
       return;
     }
 
     const bullets = (items) => (items || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    const fact = (label, value) => `
+      <div><dt class="text-[10px] uppercase tracking-[0.22em] text-white/40">${label}</dt><dd class="mt-1.5 text-white/85">${escapeHtml(value)}</dd></div>`;
 
     list.innerHTML = JOBS.map((job, i) => `
       <details id="${job.id}" class="job border-t border-white/10 last:border-b" data-reveal>
-        <summary class="flex items-center gap-6 py-8 md:gap-10 md:py-10">
-          <span class="hidden w-10 text-sm tabular-nums text-white/40 md:block">${pad(i + 1)}</span>
+        <summary class="flex items-center gap-6 py-8">
+          <span class="hidden w-10 text-[11px] tracking-[0.2em] text-white/35 md:block">${pad(i + 1)}</span>
           <span class="min-w-0 flex-1">
-            <span class="job__title block font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-6xl">${escapeHtml(job.titre)}</span>
-            <span class="mt-4 flex flex-wrap gap-2 text-white/70">
+            <span class="block font-display text-base uppercase tracking-[0.08em] md:text-xl">${escapeHtml(job.titre)}</span>
+            <span class="mt-4 flex flex-wrap gap-2 text-white/60">
               <span class="tag">${escapeHtml(job.type)}</span>
               <span class="tag">${escapeHtml(job.horaire)}</span>
               <span class="tag">${escapeHtml(job.experience)}</span>
             </span>
           </span>
-          <span class="job__icon grid size-12 shrink-0 place-items-center rounded-full border border-white/20 transition-colors duration-500 md:size-16 [&>svg]:size-5">${ICONS.plus}</span>
+          <span class="job__icon grid size-11 shrink-0 place-items-center rounded-full border border-white/20 [&>svg]:size-4">${ICONS.plus}</span>
         </summary>
-        <div class="job__body grid gap-12 pb-14 md:grid-cols-12 md:pl-20">
+        <div class="job__body grid gap-12 pb-14 md:grid-cols-12 md:pl-16">
           <div class="md:col-span-5">
-            <p class="text-lg/relaxed text-white/75">${escapeHtml(job.description)}</p>
+            <p class="text-[15px]/7 text-white/65">${escapeHtml(job.description)}</p>
             <dl class="mt-8 grid grid-cols-2 gap-6 text-sm">
-              <div><dt class="text-[11px] uppercase tracking-[0.2em] text-white/40">Type</dt><dd class="mt-1.5">${escapeHtml(job.type)}</dd></div>
-              <div><dt class="text-[11px] uppercase tracking-[0.2em] text-white/40">Horaire</dt><dd class="mt-1.5">${escapeHtml(job.horaire)}</dd></div>
-              <div><dt class="text-[11px] uppercase tracking-[0.2em] text-white/40">Expérience</dt><dd class="mt-1.5">${escapeHtml(job.experience)}</dd></div>
-              <div><dt class="text-[11px] uppercase tracking-[0.2em] text-white/40">Rémunération</dt><dd class="mt-1.5">${escapeHtml(job.remuneration)}</dd></div>
+              ${fact("Type", job.type)}
+              ${fact("Horaire", job.horaire)}
+              ${fact("Expérience", job.experience)}
+              ${fact("Rémunération", job.remuneration)}
             </dl>
-            <button type="button" class="btn btn--light mt-10" data-apply="${job.id}">Postuler à ce poste ${ICONS.arrowUpRight}</button>
+            <button type="button" class="btn btn--light mt-10" data-apply="${job.id}">Postuler à ce poste</button>
           </div>
           <div class="grid gap-10 sm:grid-cols-2 md:col-span-7">
             <div>
               <h4 class="eyebrow">Vos tâches</h4>
-              <ul class="bullet-list mt-5 space-y-3 text-white/75">${bullets(job.responsabilites)}</ul>
+              <ul class="bullet-list mt-5 space-y-3 text-sm/6 text-white/65">${bullets(job.responsabilites)}</ul>
             </div>
             <div>
               <h4 class="eyebrow">Votre profil</h4>
-              <ul class="bullet-list mt-5 space-y-3 text-white/75">${bullets(job.exigences)}</ul>
+              <ul class="bullet-list mt-5 space-y-3 text-sm/6 text-white/65">${bullets(job.exigences)}</ul>
             </div>
-            <div class="rounded-2xl bg-white/[0.04] p-6 sm:col-span-2">
+            <div class="border border-white/10 p-6 sm:col-span-2">
               <h4 class="eyebrow">Ce qu’on vous offre</h4>
-              <ul class="bullet-list mt-5 grid gap-3 text-white/75 sm:grid-cols-2">${bullets(job.avantages)}</ul>
+              <ul class="bullet-list mt-5 grid gap-3 text-sm/6 text-white/65 sm:grid-cols-2">${bullets(job.avantages)}</ul>
             </div>
           </div>
         </div>
@@ -366,22 +364,13 @@
 
   // Chiffres calculés à partir des données : ils restent toujours exacts
   function renderCounts() {
-    const openSlots = (CONFIG.horaires || []).filter(Boolean);
     const values = {
       "jobs-count": JOBS.length,
       "services-count": SERVICES.reduce((sum, cat) => sum + cat.prestations.length, 0),
-      "open-days": openSlots.length,
-      "open-hours": Math.round(openSlots.reduce((sum, s) => sum + toMinutes(s[1]) - toMinutes(s[0]), 0) / 60),
     };
-
     Object.entries(values).forEach(([key, value]) => {
-      $$(`[data-${key}]`).forEach((el) => {
-        // Avec data-count, la valeur est animée par initCounters()
-        if (el.hasAttribute("data-count")) el.dataset.count = value;
-        else el.textContent = value;
-      });
+      $$(`[data-${key}]`).forEach((el) => (el.textContent = value));
     });
-
     $$("[data-plural]").forEach((el) => {
       el.textContent = JOBS.length > 1 ? el.dataset.plural : el.dataset.singular;
     });
@@ -450,43 +439,14 @@
   }
 
   /* ------------------------------------------------------------------------
-     5. Interface : en-tête, menu, préchargement
+     5. Interface : en-tête, menu, apparitions
      ------------------------------------------------------------------------ */
   function initHeader() {
     const header = $("#header");
     if (!header) return;
-    const floating = $$("[data-floating]");
-    let lastY = window.scrollY;
-    let ticking = false;
-
-    function update() {
-      const y = window.scrollY;
-      const delta = y - lastY;
-      header.classList.toggle("is-scrolled", y > 30);
-
-      if (Math.abs(delta) > 6) {
-        const hide = delta > 0 && y > 500 && !root.classList.contains("menu-open");
-        header.classList.toggle("is-hidden", hide);
-        root.classList.toggle("header-hidden", hide);
-        lastY = y;
-      }
-
-      const showFloating = y > window.innerHeight * 0.8;
-      floating.forEach((el) => el.classList.toggle("is-visible", showFloating));
-      ticking = false;
-    }
-
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    }, { passive: true });
+    const update = () => header.classList.toggle("is-scrolled", window.scrollY > 30);
+    window.addEventListener("scroll", update, { passive: true });
     update();
-
-    $$("[data-to-top]").forEach((btn) =>
-      btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }))
-    );
   }
 
   function initMenu() {
@@ -514,233 +474,26 @@
     window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => e.matches && setOpen(false));
   }
 
-  function initPreloader() {
-    const preloader = $(".preloader");
-    const finish = () => root.classList.add("is-loaded");
-    if (!preloader) {
-      finish();
-      return;
-    }
-
-    let alreadySeen = false;
-    try {
-      alreadySeen = sessionStorage.getItem("kb-visited") === "1";
-      sessionStorage.setItem("kb-visited", "1");
-    } catch (e) { /* stockage indisponible : on affiche l'animation complète */ }
-
-    const quick = alreadySeen || reduceMotion;
-    if (quick) preloader.classList.add("is-quick");
-
-    const count = $(".preloader__count", preloader);
-    const bar = $(".preloader__bar", preloader);
-    const duration = quick ? 200 : 1300;
-    const fontsReady = Promise.race([
-      document.fonts ? document.fonts.ready : Promise.resolve(),
-      new Promise((resolve) => setTimeout(resolve, 2500)),
-    ]);
-    const start = performance.now();
-
-    function tick(now) {
-      const progress = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      if (count) count.textContent = String(Math.round(eased * 100)).padStart(3, "0");
-      if (bar) bar.style.setProperty("--p", eased);
-      if (progress < 1) requestAnimationFrame(tick);
-      else fontsReady.then(done);
-    }
-
-    function done() {
-      preloader.classList.add("is-done");
-      finish();
-      setTimeout(() => preloader.remove(), 1100);
-    }
-
-    requestAnimationFrame(tick);
-  }
-
-  /* ------------------------------------------------------------------------
-     6. Animations
-     ------------------------------------------------------------------------ */
-  let revealObserver = null;
-
+  // Fondu discret des blocs à leur entrée dans l'écran
   function initReveal() {
-    const elements = $$("[data-reveal]:not(.is-in)");
-    if (!("IntersectionObserver" in window)) {
+    const elements = $$("[data-reveal]");
+    if (!("IntersectionObserver" in window) || reduceMotion) {
       elements.forEach((el) => el.classList.add("is-in"));
-      return;
-    }
-    revealObserver = revealObserver || new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
-    elements.forEach((el) => revealObserver.observe(el));
-  }
-
-  function initCounters() {
-    const counters = $$("[data-count]");
-    if (!counters.length) return;
-
-    const animate = (el) => {
-      const target = Number(el.dataset.count) || 0;
-      const suffix = el.dataset.suffix || "";
-      if (reduceMotion) {
-        el.textContent = target + suffix;
-        return;
-      }
-      const start = performance.now();
-      const duration = 1600;
-      (function step(now) {
-        const p = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(2, -10 * p);
-        el.textContent = Math.round(target * (p === 1 ? 1 : eased)) + suffix;
-        if (p < 1) requestAnimationFrame(step);
-      })(start);
-    };
-
-    if (!("IntersectionObserver" in window)) {
-      counters.forEach(animate);
       return;
     }
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          animate(entry.target);
+          entry.target.classList.add("is-in");
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.6 });
-    counters.forEach((el) => io.observe(el));
-  }
-
-  function initMarquee() {
-    $$(".marquee").forEach((marquee) => {
-      const group = $(".marquee__group", marquee);
-      if (!group) return;
-      for (let i = 0; i < 2; i++) {
-        const clone = group.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        marquee.appendChild(clone);
-      }
-    });
-  }
-
-  function initParallax() {
-    const elements = $$("[data-parallax]");
-    if (!elements.length || reduceMotion) return;
-    let ticking = false;
-
-    function update() {
-      const vh = window.innerHeight;
-      elements.forEach((el) => {
-        const rect = el.parentElement.getBoundingClientRect();
-        if (rect.bottom < -100 || rect.top > vh + 100) return;
-        const speed = parseFloat(el.dataset.parallax) || 0.15;
-        const scale = el.dataset.parallaxScale || 1.15;
-        const offset = (rect.top + rect.height / 2 - vh / 2) * -speed;
-        el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(${scale})`;
-      });
-      ticking = false;
-    }
-
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    }, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-  }
-
-  function initCursor() {
-    if (!finePointer || reduceMotion) return;
-
-    const cursor = document.createElement("div");
-    cursor.className = "cursor is-hidden";
-    cursor.setAttribute("aria-hidden", "true");
-    cursor.innerHTML = '<span class="cursor__label"></span>';
-    document.body.appendChild(cursor);
-    const label = cursor.firstElementChild;
-
-    let x = -100, y = -100, cx = -100, cy = -100;
-
-    window.addEventListener("pointermove", (e) => {
-      x = e.clientX;
-      y = e.clientY;
-      cursor.classList.remove("is-hidden");
-    }, { passive: true });
-    document.documentElement.addEventListener("pointerleave", () => cursor.classList.add("is-hidden"));
-
-    document.addEventListener("pointerover", (e) => {
-      const target = e.target.closest("[data-cursor], a, button, summary, label, select");
-      const text = target && target.dataset.cursor;
-      cursor.classList.toggle("is-label", Boolean(text));
-      cursor.classList.toggle("is-hover", Boolean(target) && !text);
-      if (text) label.textContent = text;
-    });
-
-    (function loop() {
-      cx += (x - cx) * 0.22;
-      cy += (y - cy) * 0.22;
-      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  // Image qui suit le curseur au survol de la liste des services (accueil)
-  function initHoverReveal() {
-    const list = $("[data-services-list]");
-    if (!list || !finePointer || reduceMotion) return;
-
-    const box = document.createElement("div");
-    box.className = "hover-reveal";
-    box.setAttribute("aria-hidden", "true");
-    box.innerHTML = '<img alt="">';
-    document.body.appendChild(box);
-    const img = box.firstElementChild;
-
-    let x = 0, y = 0, cx = 0, cy = 0, running = false, visible = false;
-
-    function loop() {
-      cx += (x - cx) * 0.12;
-      cy += (y - cy) * 0.12;
-      const rotate = Math.max(-10, Math.min(10, (x - cx) * 0.06));
-      box.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%) rotate(${rotate.toFixed(2)}deg)`;
-      if (visible || Math.abs(x - cx) > 0.5 || Math.abs(y - cy) > 0.5) requestAnimationFrame(loop);
-      else running = false;
-    }
-
-    list.addEventListener("pointermove", (e) => {
-      x = e.clientX;
-      y = e.clientY;
-    });
-    list.addEventListener("pointerover", (e) => {
-      const row = e.target.closest("[data-hover-img]");
-      if (!row) return;
-      if (img.getAttribute("src") !== row.dataset.hoverImg) img.src = row.dataset.hoverImg;
-      if (!visible) {
-        cx = x = e.clientX;
-        cy = y = e.clientY;
-      }
-      visible = true;
-      box.classList.add("is-visible");
-      if (!running) {
-        running = true;
-        requestAnimationFrame(loop);
-      }
-    });
-    list.addEventListener("pointerleave", () => {
-      visible = false;
-      box.classList.remove("is-visible");
-    });
+    }, { rootMargin: "0px 0px -6% 0px" });
+    elements.forEach((el) => io.observe(el));
   }
 
   /* ------------------------------------------------------------------------
-     7. Galerie : filtres et visionneuse
+     6. Galerie : filtres et visionneuse
      ------------------------------------------------------------------------ */
   function initGallery() {
     const grid = $("[data-gallery]");
@@ -753,12 +506,7 @@
         const filter = button.dataset.filter;
         buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
         items.forEach((item) => {
-          const show = filter === "tout" || item.dataset.cat.split(" ").includes(filter);
-          item.hidden = !show;
-          if (show) {
-            item.classList.remove("is-in");
-            requestAnimationFrame(() => item.classList.add("is-in"));
-          }
+          item.hidden = !(filter === "tout" || item.dataset.cat.split(" ").includes(filter));
         });
       });
     });
@@ -775,15 +523,15 @@
     box.setAttribute("aria-label", "Visionneuse de photos");
     box.innerHTML = `
       <div class="flex items-center justify-between px-5 py-5 md:px-10">
-        <span class="text-xs tabular-nums tracking-[0.3em] text-white/60" data-lb-count></span>
+        <span class="text-[11px] tabular-nums tracking-[0.3em] text-white/50" data-lb-count></span>
         <button type="button" class="lb-btn" data-lb-close aria-label="Fermer">${ICONS.close}</button>
       </div>
-      <div class="relative flex min-h-0 items-center justify-center px-4 md:px-28" data-lb-stage>
+      <div class="relative flex min-h-0 items-center justify-center px-4 md:px-24" data-lb-stage>
         <img class="lightbox__img" alt="">
         <button type="button" class="lb-btn absolute left-4 top-1/2 -translate-y-1/2 md:left-10" data-lb-prev aria-label="Photo précédente">${ICONS.prev}</button>
         <button type="button" class="lb-btn absolute right-4 top-1/2 -translate-y-1/2 md:right-10" data-lb-next aria-label="Photo suivante">${ICONS.next}</button>
       </div>
-      <p class="px-5 py-6 text-center font-accent text-2xl italic md:text-3xl" data-lb-caption></p>`;
+      <p class="px-5 py-6 text-center text-[11px] uppercase tracking-[0.3em] text-white/60" data-lb-caption></p>`;
     document.body.appendChild(box);
 
     const img = $(".lightbox__img", box);
@@ -870,7 +618,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     8. Données structurées (référencement local)
+     7. Données structurées (référencement local)
      ------------------------------------------------------------------------ */
   function injectSchema() {
     if (document.body.dataset.page !== "accueil") return;
@@ -883,6 +631,7 @@
       telephone: CONFIG.telephone,
       email: CONFIG.courriel,
       image: new URL("img/salon2.jpg", location.href).href,
+      logo: new URL("img/logo.svg", location.href).href,
       address: {
         "@type": "PostalAddress",
         streetAddress: a.rue,
@@ -914,25 +663,19 @@
   renderHours();
   renderServiceRows();
   renderServicesPage();
-  renderJobCards();
+  renderJobRows();
   renderJobDetails();
   populateJobSelect();
   renderCounts();
   injectSchema();
 
-  initPreloader();
   initHeader();
   initMenu();
-  initMarquee();
   initReveal();
-  initCounters();
-  initParallax();
   initGallery();
   initLightbox();
   initScrollSpy();
   initApply();
-  initCursor();
-  initHoverReveal();
 
   if (document.readyState === "complete") handleHash(true);
   else window.addEventListener("load", () => handleHash(true));

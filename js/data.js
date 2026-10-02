@@ -7,6 +7,8 @@
    Prix : un nombre (ex. 55) s'affiche « 55 $ ».
           Ajoutez des: true pour afficher « dès 55 $ ».
           Un texte (ex. "Sur consultation") s'affiche tel quel.
+   prixDepart (facultatif, par catégorie) : prix « dès … » affiché sur
+          l'accueil. Sans lui, le prix le plus bas de la catégorie est utilisé.
    ⚠️ Les prix ci-dessous sont des exemples — à ajuster avec le salon.
    ========================================================================== */
 
@@ -15,6 +17,7 @@ window.KB_SERVICES = [
     id: "femmes",
     titre: "Femmes",
     image: "img/brushing.jpg",
+    prixDepart: 35, // la retouche de frange (12 $) n'est pas un prix d'appel
     description:
       "Des coupes sur mesure, pensées selon la forme de votre visage, la nature de vos cheveux et votre quotidien.",
     prestations: [

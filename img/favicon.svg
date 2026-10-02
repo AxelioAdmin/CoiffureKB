@@ -1,5 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="32" fill="#0a0a0a"/>
-  <circle cx="32" cy="32" r="30" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="2"/>
-  <text x="32" y="41.5" text-anchor="middle" font-family="Arial Black, Helvetica, Arial, sans-serif" font-weight="900" font-size="25" letter-spacing="-1.5" fill="#ffffff">KB</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 12 140 140">
+  <defs>
+    <mask id="seam" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <rect width="200" height="200" fill="#fff"/>
+      <path d="M45.2 80.4L84 28H106L66 82L106 136H84L45.2 83.6Q44 82 45.2 80.4Z" fill="#000" stroke="#000" stroke-width="3.4" stroke-linejoin="round"/>
+    </mask>
+  </defs>
+  <rect x="16" y="12" width="140" height="140" rx="28" fill="#0b0b0b"/>
+  <g fill="#ffffff">
+    <path d="M27 45H39Q41 45 41 47V119Q41 121 39 121H27Q25 121 25 119V47Q25 45 27 45Z"/>
+    <path d="M45.2 80.4L84 28H106L66 82L106 136H84L45.2 83.6Q44 82 45.2 80.4Z"/>
+    <path fill-rule="evenodd" mask="url(#seam)" d="M80 45H127Q141 45 141 59V66Q141 79 134 80Q147 81 147 94V106Q147 120 133 120H80ZM95 58V73H122Q128 73 128 67V64Q128 58 122 58ZM95 87V106H126Q132 106 132 100V93Q132 87 126 87Z"/>
+  </g>
 </svg>
