@@ -595,6 +595,8 @@
       toggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
       menu.classList.toggle("is-open", open);
       menu.inert = !open;
+      // Le contenu caché derrière le menu ne doit pas recevoir le focus
+      $$("main, footer").forEach((el) => (el.inert = open));
       root.classList.toggle("menu-open", open);
     };
 
