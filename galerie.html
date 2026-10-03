@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fr-CA" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galerie — Coiffure KB Unisexe</title>
+  <meta name="description" content="Coupes femmes et hommes, dégradés, barbe, balayages et coiffures d'événement : parcourez la galerie d'inspirations de Coiffure KB Unisexe.">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta property="og:title" content="Galerie — Coiffure KB Unisexe">
+  <meta property="og:image" content="img/balayage.jpg">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300..600&family=Michroma&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Tailwind CSS v4 (aucune compilation nécessaire) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Michroma", "Jost", sans-serif;
+      --color-ink: #0b0b0b;
+      --color-paper: #f2f0eb;
+    }
+  </style>
+</head>
+
+<body class="bg-ink text-white antialiased" data-page="galerie">
+  <a href="#contenu" class="skip-link">Aller au contenu</a>
+
+  <!-- ===================================================================
+       EN-TÊTE
+       =================================================================== -->
+  <header id="header" class="site-header fixed inset-x-0 top-0 z-50">
+    <div class="container-kb flex items-center justify-between gap-8 py-5">
+      <a href="index.html" class="shrink-0" aria-label="Coiffure KB Unisexe — accueil">
+        <img src="img/logo.svg" alt="Coiffure KB Unisexe" class="h-9 w-auto md:h-11" width="146" height="44">
+      </a>
+
+      <nav class="hidden lg:block" aria-label="Navigation principale">
+        <ul class="flex items-center gap-9">
+          <li><a class="nav-link" href="salon.html">Le salon</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="galerie.html" aria-current="page">Galerie</a></li>
+          <li><a class="nav-link" href="emplois.html">Emplois</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="index.html#rendez-vous" class="btn btn--ghost hidden sm:inline-flex" data-kb-booking>Rendez-vous</a>
+        <button type="button" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu mobile -->
+  <div id="menu-mobile" class="mobile-menu lg:hidden" inert>
+    <nav aria-label="Navigation mobile">
+      <ul class="border-t border-white/10">
+        <li><a href="salon.html" class="mobile-menu__link">Le salon</a></li>
+        <li><a href="services.html" class="mobile-menu__link">Services</a></li>
+        <li><a href="galerie.html" class="mobile-menu__link" aria-current="page">Galerie</a></li>
+        <li><a href="emplois.html" class="mobile-menu__link">Emplois</a></li>
+        <li><a href="contact.html" class="mobile-menu__link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="space-y-2 text-sm text-white/55">
+      <a href="#" class="block text-base text-white" data-kb-tel data-kb="telephone">(514) 555-0123</a>
+      <p data-kb="adresse">123, rue Principale, Ville (QC) A1A 1A1</p>
+    </div>
+  </div>
+
+  <main id="contenu">
+
+    <!-- =================================================================
+         EN-TÊTE DE PAGE
+         ================================================================= -->
+    <section class="pb-16 pt-40 md:pb-20 md:pt-48">
+      <div class="container-kb">
+        <nav aria-label="Fil d'Ariane" class="text-[11px] uppercase tracking-[0.25em] text-white/40" data-reveal>
+          <a href="index.html" class="link-line hover:text-white">Accueil</a><span class="mx-3" aria-hidden="true">/</span><span class="text-white/70">Galerie</span>
+        </nav>
+
+        <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end">
+          <h1 class="font-display text-[clamp(1.7rem,3vw,2.6rem)] leading-[1.3] tracking-[0.01em] lg:col-span-7" data-reveal>
+            Styles <span class="text-white/45">&amp; inspirations</span>
+          </h1>
+          <p class="text-[15px]/7 text-white/60 lg:col-span-4 lg:col-start-9" data-reveal>Coupes, couleurs, barbe et coiffures d'événement&nbsp;: quelques idées pour vous inspirer avant votre visite. Sélectionnez une photo pour l'agrandir.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         GALERIE
+         ================================================================= -->
+    <section id="galerie" class="border-t border-white/10 pb-28 pt-10 md:pb-40" aria-label="Photos">
+      <div class="container-kb">
+        <div class="flex flex-wrap gap-x-7 gap-y-2" role="group" aria-label="Filtrer la galerie" data-reveal>
+          <button type="button" class="tab-link" data-filter="tout" aria-pressed="true">Tout</button>
+          <button type="button" class="tab-link" data-filter="femmes" aria-pressed="false">Femmes</button>
+          <button type="button" class="tab-link" data-filter="hommes" aria-pressed="false">Hommes</button>
+          <button type="button" class="tab-link" data-filter="enfants" aria-pressed="false">Enfants</button>
+          <button type="button" class="tab-link" data-filter="couleur" aria-pressed="false">Couleur</button>
+          <button type="button" class="tab-link" data-filter="salon" aria-pressed="false">Le salon</button>
+        </div>
+
+        <div class="mt-12 columns-2 gap-3 md:columns-3 xl:columns-4 [&>figure]:mb-3" data-gallery data-reveal>
+          <figure class="group relative break-inside-avoid" data-cat="salon">
+            <a href="img/salon1.jpg" class="block overflow-hidden" data-lightbox data-caption="Le salon"><img src="img/salon1.jpg" alt="Fauteuils et postes de coiffure du salon" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Le salon</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes couleur">
+            <a href="img/balayage.jpg" class="block overflow-hidden" data-lightbox data-caption="Balayage blond"><img src="img/balayage.jpg" alt="Longs cheveux blonds avec un balayage" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Balayage blond</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/degrade.jpg" class="block overflow-hidden" data-lightbox data-caption="Dégradé &amp; barbe"><img src="img/degrade.jpg" alt="Barbier traçant un dégradé net au rasoir" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Dégradé &amp; barbe</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes">
+            <a href="img/brushing.jpg" class="block overflow-hidden" data-lightbox data-caption="Brushing"><img src="img/brushing.jpg" alt="Coiffeuse réalisant un brushing au séchoir" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Brushing</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="couleur femmes">
+            <a href="img/coloration-pastel.jpg" class="block overflow-hidden" data-lightbox data-caption="Coloration fantaisie"><img src="img/coloration-pastel.jpg" alt="Longs cheveux ondulés à la coloration pastel" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coloration fantaisie</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/coupe-homme.jpg" class="block overflow-hidden" data-lightbox data-caption="Coupe à la tondeuse"><img src="img/coupe-homme.jpg" alt="Coupe homme à la tondeuse sur la nuque" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coupe à la tondeuse</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes">
+            <a href="img/chignon.jpg" class="block overflow-hidden" data-lightbox data-caption="Chignon tressé"><img src="img/chignon.jpg" alt="Chignon tressé orné d'une pince à cheveux" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Chignon tressé</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="salon">
+            <a href="img/salon2.jpg" class="block overflow-hidden" data-lightbox data-caption="L'accueil"><img src="img/salon2.jpg" alt="Accueil du salon et fauteuils de coiffure" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">L'accueil</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/barbe.jpg" class="block overflow-hidden" data-lightbox data-caption="Taille de barbe"><img src="img/barbe.jpg" alt="Taille de barbe aux ciseaux" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Taille de barbe</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes">
+            <a href="img/cheveux-boucles.jpg" class="block overflow-hidden" data-lightbox data-caption="Texture naturelle"><img src="img/cheveux-boucles.jpg" alt="Portrait d'une femme aux cheveux bouclés naturels" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Texture naturelle</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="enfants">
+            <a href="img/enfant-coupe.jpg" class="block overflow-hidden" data-lightbox data-caption="Coupe garçon"><img src="img/enfant-coupe.jpg" alt="Jeune garçon avec une coupe soignée chez le coiffeur" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coupe garçon</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="couleur">
+            <a href="img/coloration.jpg" class="block overflow-hidden" data-lightbox data-caption="Couleur vive"><img src="img/coloration.jpg" alt="Cheveux colorés en mouvement" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Couleur vive</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/coiffage-homme.jpg" class="block overflow-hidden" data-lightbox data-caption="Coiffage texturé"><img src="img/coiffage-homme.jpg" alt="Coiffeur travaillant une coupe homme texturée" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coiffage texturé</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes">
+            <a href="img/boucles-fer.jpg" class="block overflow-hidden" data-lightbox data-caption="Boucles au fer"><img src="img/boucles-fer.jpg" alt="Mise en forme de boucles au fer à friser" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Boucles au fer</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/portrait-homme.jpg" class="block overflow-hidden" data-lightbox data-caption="Coupe courte classique"><img src="img/portrait-homme.jpg" alt="Portrait d'un homme à la coupe courte et nette" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coupe courte classique</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="enfants">
+            <a href="img/enfants.jpg" class="block overflow-hidden" data-lightbox data-caption="Coupe enfant"><img src="img/enfants.jpg" alt="Enfant pendant sa coupe de cheveux" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coupe enfant</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes">
+            <a href="img/mise-en-plis.jpg" class="block overflow-hidden" data-lightbox data-caption="Mise en plis"><img src="img/mise-en-plis.jpg" alt="Mise en plis à la brosse ronde et au séchoir" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Mise en plis</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/rasage.jpg" class="block overflow-hidden" data-lightbox data-caption="Rasage traditionnel"><img src="img/rasage.jpg" alt="Rasage de la barbe au blaireau" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Rasage traditionnel</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes">
+            <a href="img/coiffure-evenement.jpg" class="block overflow-hidden" data-lightbox data-caption="Coiffure d'événement"><img src="img/coiffure-evenement.jpg" alt="Coiffeur épinglant une coiffure d'événement torsadée" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coiffure d'événement</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="hommes">
+            <a href="img/peigne-homme.jpg" class="block overflow-hidden" data-lightbox data-caption="Coiffage au peigne"><img src="img/peigne-homme.jpg" alt="Coiffage au peigne de cheveux mi-longs pour homme" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Coiffage au peigne</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="femmes couleur">
+            <a href="img/cheveux-longs.jpg" class="block overflow-hidden" data-lightbox data-caption="Ondulations & reflets"><img src="img/cheveux-longs.jpg" alt="Longs cheveux ondulés aux reflets caramel" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Ondulations & reflets</figcaption>
+          </figure>
+          <figure class="group relative break-inside-avoid" data-cat="salon">
+            <a href="img/soin.jpg" class="block overflow-hidden" data-lightbox data-caption="Shampoing & soin"><img src="img/soin.jpg" alt="Shampoing au bac avec rinçage à la douchette" loading="lazy" class="img-bw w-full transition-transform duration-1000 group-hover:scale-[1.03]"></a>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/80 to-transparent p-4 text-[10px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-500 group-hover:opacity-100">Shampoing & soin</figcaption>
+          </figure>
+        </div>
+
+        <div class="mt-20 flex flex-col items-start gap-8 border-t border-white/10 pt-12 md:flex-row md:items-center md:justify-between" data-reveal>
+          <p class="max-w-xl text-[15px]/7 text-white/60">Un style vous plaît&nbsp;? <span class="text-white">Apportez la photo à votre rendez-vous</span>&nbsp;: on l'adaptera à vos cheveux et à votre visage.</p>
+          <a href="index.html#rendez-vous" class="btn btn--ghost" data-kb-booking>Demander un rendez-vous</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================
+       PIED DE PAGE
+       =================================================================== -->
+  <footer class="border-t border-white/10">
+    <div class="container-kb py-20 md:py-24">
+      <div class="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
+        <p class="font-display text-[clamp(1.2rem,2vw,1.6rem)] leading-snug">Prêt pour un <span class="text-white/45">nouveau look&nbsp;?</span></p>
+        <a href="index.html#rendez-vous" class="btn btn--light" data-kb-booking>Prendre rendez-vous</a>
+      </div>
+
+      <div class="mt-16 grid gap-12 border-t border-white/10 pt-16 sm:grid-cols-2 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <a href="index.html" class="inline-block" aria-label="Coiffure KB Unisexe — accueil">
+            <img src="img/logo.svg" alt="Coiffure KB Unisexe" class="h-12 w-auto" width="160" height="48" loading="lazy">
+          </a>
+          <p class="mt-6 max-w-xs text-sm/6 text-white/50">Salon de coiffure unisexe&nbsp;: coupes, couleurs, barbe et soins pour toute la famille.</p>
+          <div class="mt-6 flex gap-2">
+            <a href="#" target="_blank" rel="noopener" aria-label="Facebook" class="grid size-10 place-items-center border border-white/15 transition-colors duration-300 hover:bg-white hover:text-ink" data-kb-social="facebook">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-4"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Instagram" class="grid size-10 place-items-center border border-white/15 transition-colors duration-300 hover:bg-white hover:text-ink" data-kb-social="instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-4"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav class="lg:col-span-2" aria-label="Pied de page">
+          <h3 class="eyebrow">Menu</h3>
+          <ul class="mt-5 space-y-2.5 text-sm text-white/60">
+            <li><a class="link-line hover:text-white" href="salon.html">Le salon</a></li>
+            <li><a class="link-line hover:text-white" href="services.html">Services &amp; tarifs</a></li>
+            <li><a class="link-line hover:text-white" href="galerie.html">Galerie</a></li>
+            <li><a class="link-line hover:text-white" href="emplois.html">Emplois</a></li>
+            <li><a class="link-line hover:text-white" href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="lg:col-span-3">
+          <h3 class="eyebrow">Heures</h3>
+          <ul class="mt-5 text-[13px]" data-kb-hours="compact"></ul>
+        </div>
+
+        <div class="lg:col-span-3">
+          <h3 class="eyebrow">Coordonnées</h3>
+          <address class="mt-5 space-y-2.5 text-sm not-italic text-white/60">
+            <p data-kb="rue">123, rue Principale</p>
+            <p data-kb="ville">Ville (QC) A1A 1A1</p>
+            <p><a href="#" class="link-line hover:text-white" data-kb-tel data-kb="telephone">(514) 555-0123</a></p>
+            <p><a href="#" class="link-line hover:text-white" data-kb-mail data-kb="courriel">salon@example.com</a></p>
+          </address>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10">
+      <div class="container-kb flex flex-col gap-2 py-6 text-[11px] uppercase tracking-[0.2em] text-white/35 sm:flex-row sm:justify-between">
+        <p>© <span data-kb-year>2026</span> Coiffure KB Unisexe</p>
+        <p>Photos d'inspiration&nbsp;: Unsplash</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -393,6 +393,18 @@
   }
   select.field__input option { background: #141414; color: #fff; }
   textarea.field__input { resize: vertical; min-height: 7.5rem; }
+  .field__input:disabled { opacity: 0.4; cursor: not-allowed; }
+  input[type="date"].field__input { min-height: 3.2rem; }
+  input[type="date"].field__input::-webkit-calendar-picker-indicator { opacity: 0.6; cursor: pointer; }
+
+  .field__hint {
+    min-height: 1rem;
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgb(255 255 255 / 0.45);
+  }
+  .field__hint.is-error { color: #d98c8c; }
 
   .check-pill { position: relative; }
   .check-pill input { position: absolute; opacity: 0; pointer-events: none; }
