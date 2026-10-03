@@ -98,15 +98,15 @@
     $$("[data-kb-tel]").forEach((el) => (el.href = telHref()));
     $$("[data-kb-mail]").forEach((el) => (el.href = "mailto:" + CONFIG.courriel));
     $$("[data-kb-mail-jobs]").forEach((el) => (el.href = "mailto:" + values.courrielEmplois));
-    $$("[data-kb-booking]").forEach((el) => {
-      if (CONFIG.reservation) {
+    // Sans lien de réservation en ligne, les boutons « Rendez-vous » gardent
+    // leur lien vers le formulaire de demande de l'accueil (index.html#rendez-vous).
+    if (CONFIG.reservation) {
+      $$("[data-kb-booking]").forEach((el) => {
         el.href = CONFIG.reservation;
         el.target = "_blank";
         el.rel = "noopener";
-      } else {
-        el.href = telHref();
-      }
-    });
+      });
+    }
 
     $$("[data-kb-social]").forEach((el) => {
       const url = (CONFIG.reseaux || {})[el.dataset.kbSocial];
@@ -439,7 +439,143 @@
   }
 
   /* ------------------------------------------------------------------------
-     5. Interface : en-tête, menu, apparitions
+     5. Demande de rendez-vous (accueil)
+     ------------------------------------------------------------------------ */
+  const isoDate = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  const minutesToTime = (minutes) => `${Math.floor(minutes / 60)}:${pad(minutes % 60)}`;
+
+  // "2026-10-06" → date locale (new Date("2026-10-06") serait lue en heure UTC)
+  function parseDate(value) {
+    const [y, m, d] = value.split("-").map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  function populateServiceSelect() {
+    $$("[data-service-select]").forEach((select) => {
+      const options = ['<option value="À déterminer (consultation)">Je ne sais pas encore — consultation</option>'];
+      SERVICES.forEach((cat) => {
+        const items = cat.prestations.map((p) =>
+          `<option value="${escapeHtml(`${cat.titre} — ${p.nom}`)}">${escapeHtml(p.nom)} · ${formatPrice(p)}</option>`
+        );
+        options.push(`<optgroup label="${escapeHtml(cat.titre)}">${items.join("")}</optgroup>`);
+      });
+      select.insertAdjacentHTML("beforeend", options.join(""));
+    });
+  }
+
+  function initBooking() {
+    const form = $("[data-booking-form]");
+    if (!form) return;
+    const dateInput = $("[data-booking-date]", form);
+    const timeSelect = $("[data-booking-time]", form);
+    const hint = $("[data-booking-hint]", form);
+    const hours = CONFIG.horaires || [];
+
+    // Rappel des jours de fermeture : « Salon fermé le lundi et le dimanche. »
+    const closedDays = WEEK_ORDER.filter((day) => !hours[day]).map((day) => `le ${DAYS[day].toLowerCase()}`);
+    const defaultHint = closedDays.length
+      ? `Salon fermé ${closedDays.length > 1 ? `${closedDays.slice(0, -1).join(", ")} et ${closedDays[closedDays.length - 1]}` : closedDays[0]}.`
+      : "";
+
+    dateInput.min = isoDate(new Date());
+
+    function setTimeOptions(placeholder, slots = []) {
+      const previous = timeSelect.value;
+      timeSelect.innerHTML = `<option value="" disabled selected>${placeholder}</option>`
+        + (slots.length ? '<option value="Peu importe">Peu importe</option>' : "")
+        + slots.map((t) => `<option>${formatHour(minutesToTime(t))}</option>`).join("");
+      timeSelect.disabled = !slots.length;
+      if (previous && $$("option", timeSelect).some((o) => o.value === previous)) timeSelect.value = previous;
+    }
+
+    function showHint(text, isError = false) {
+      hint.textContent = text;
+      hint.classList.toggle("is-error", isError);
+      dateInput.setCustomValidity(isError ? text : "");
+    }
+
+    // Plages aux 30 minutes selon les heures d'ouverture du jour choisi
+    function updateSlots() {
+      if (!dateInput.value) {
+        showHint(defaultHint);
+        setTimeOptions("Choisissez d'abord une date");
+        return;
+      }
+
+      const day = parseDate(dateInput.value).getDay();
+      const slot = hours[day];
+      const slots = [];
+      let error = "";
+
+      if (dateInput.value < dateInput.min) {
+        error = "Choisissez une date à partir d'aujourd'hui.";
+      } else if (!slot) {
+        error = `Le salon est fermé le ${DAYS[day].toLowerCase()}. Choisissez une autre date.`;
+      } else {
+        // Dernière plage 30 min avant la fermeture ; aujourd'hui, au moins 1 h d'avance
+        const now = new Date();
+        const earliest = dateInput.value === isoDate(now) ? now.getHours() * 60 + now.getMinutes() + 60 : 0;
+        for (let t = toMinutes(slot[0]); t <= toMinutes(slot[1]) - 30; t += 30) {
+          if (t >= earliest) slots.push(t);
+        }
+        if (!slots.length) error = "Plus aucune plage disponible aujourd'hui. Choisissez une autre date.";
+      }
+
+      if (error) {
+        showHint(error, true);
+        setTimeOptions("Aucune plage disponible");
+      } else {
+        showHint(`${DAYS[day]} : ouvert de ${formatHour(slot[0])} à ${formatHour(slot[1])}.`);
+        setTimeOptions("Choisir une heure…", slots);
+      }
+    }
+
+    dateInput.addEventListener("change", updateSlots);
+    dateInput.addEventListener("input", updateSlots);
+    updateSlots(); // tient compte d'une date restaurée par le navigateur
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const nom = data.get("nom");
+      const date = parseDate(data.get("date")).toLocaleDateString("fr-CA", {
+        weekday: "long", day: "numeric", month: "long", year: "numeric",
+      });
+      const body = [
+        "Bonjour,",
+        "",
+        "J'aimerais prendre rendez-vous au salon.",
+        "",
+        `Service : ${data.get("service")}`,
+        `Date souhaitée : ${date}`,
+        `Heure souhaitée : ${data.get("heure")}`,
+        `Visite : ${data.get("visite") || "—"}`,
+        "",
+        `Nom : ${nom}`,
+        `Téléphone : ${data.get("telephone")}`,
+        `Courriel : ${data.get("courriel") || "—"}`,
+        "",
+        "Précisions :",
+        data.get("message") || "—",
+        "",
+        "Merci de me confirmer le rendez-vous.",
+      ].join("\r\n");
+
+      const subject = `Demande de rendez-vous — ${nom} — ${date}`;
+      window.location.href = `mailto:${CONFIG.courriel}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      const success = $("[data-booking-success]", form);
+      if (success) {
+        success.hidden = false;
+        success.focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     6. Interface : en-tête, menu, apparitions
      ------------------------------------------------------------------------ */
   function initHeader() {
     const header = $("#header");
@@ -493,7 +629,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     6. Galerie : filtres et visionneuse
+     7. Galerie : filtres et visionneuse
      ------------------------------------------------------------------------ */
   function initGallery() {
     const grid = $("[data-gallery]");
@@ -618,7 +754,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     7. Données structurées (référencement local)
+     8. Données structurées (référencement local)
      ------------------------------------------------------------------------ */
   function injectSchema() {
     if (document.body.dataset.page !== "accueil") return;
@@ -666,6 +802,7 @@
   renderJobRows();
   renderJobDetails();
   populateJobSelect();
+  populateServiceSelect();
   renderCounts();
   injectSchema();
 
@@ -676,6 +813,7 @@
   initLightbox();
   initScrollSpy();
   initApply();
+  initBooking();
 
   if (document.readyState === "complete") handleHash(true);
   else window.addEventListener("load", () => handleHash(true));

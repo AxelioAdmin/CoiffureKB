@@ -10,7 +10,7 @@ window.KB_CONFIG = {
 
   // ⚠️ Valeurs d'exemple — à remplacer par les vraies coordonnées du salon.
   telephone: "(514) 555-0123",
-  courriel: "salon@example.com",
+  courriel: "salon@example.com", // reçoit aussi les demandes de rendez-vous de l'accueil
   courrielEmplois: "emplois@example.com", // reçoit les candidatures du formulaire
 
   adresse: {
@@ -25,7 +25,7 @@ window.KB_CONFIG = {
   carte: "Coiffure KB Unisexe",
 
   // Lien de réservation en ligne (facultatif). Laisser vide pour que les
-  // boutons « Rendez-vous » appellent directement le salon.
+  // boutons « Rendez-vous » mènent au formulaire de demande de l'accueil.
   reservation: "",
 
   // Réseaux sociaux (laisser vide pour masquer l'icône).
